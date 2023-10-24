@@ -12,12 +12,14 @@
                 <h2 style="text-align: center; color: orange;">Expense Count</h2>
                 <br>
                 <div>
+                    <label>Date: </label>
+                    <input type="date", id="date", name="date" required>
                     <label>Expense Amount: </label>
                     <input id="amount" type="text" name="amount" required>
                     <label>Enter Description: </label>
-                    <input type="text" name="Description" id="Description" required>
+                    <input type="text" name="description" id="description" required>
                     <label>Choose Category: </label>
-                    <select name="Category" id="Category">
+                    <select name="category" id="category">
                         <option value="Fuel">Fuel</option>
                         <option value="Food">Food</option>
                         <option value="Electricity">Electricity</option>
@@ -26,6 +28,8 @@
                     </select>
                     <button id="add-expense">Add Expense</button>
                 </div>
+                <ul id="items" class="list-group"></ul>
+                <script src="main.js"></script>
             </form>
         </fieldset>
     </div>
