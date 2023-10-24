@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="one">
+        <fieldset style="border-radius: 20px; border: 2px solid orange;">
+            <form id="add-form" onsubmit="onsignup(event)">
+                <h2 style="text-align: center; color: orange;">Expense Count</h2>
+                <br>
+                <div>
+                    <label>Expense Amount: </label>
+                    <input id="amount" type="text" name="amount" required>
+                    <label>Enter Description: </label>
+                    <input type="text" name="Description" id="Description" required>
+                    <label>Choose Category: </label>
+                    <select name="Category" id="Category">
+                        <option value="Fuel">Fuel</option>
+                        <option value="Food">Food</option>
+                        <option value="Electricity">Electricity</option>
+                        <option value="Movie">Movie</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <button id="add-expense">Add Expense</button>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</body>
+</html>
