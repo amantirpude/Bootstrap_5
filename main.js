@@ -1,9 +1,94 @@
-let itemList = document.getElementById("items");
-let form = document.getElementById("add-form");
+const itemList = document.getElementById("items");
+const expenseForm = document.getElementById("add-form");
     
-form.addEventListener('button', onsignup);
+expenseForm.addEventListener('button', onsignup);
 itemList.addEventListener("click",removeItem);
-let myObj_Ser;
+
+// const dateInput = expenseForm["date"];
+// const amountInput = expenseForm["amount"];
+// const descriptionInput = expenseForm["description"];
+// const categoryInput = expenseForm["category"];
+
+
+
+// const expenses = [];
+// const addElement = (date, amount, description, category) =>{
+//     expenses.push({
+//         date:date,
+//         amount:amount,
+//         description:description,
+//         category:category
+//     })
+//     localStorage.setItem(date, JSON.stringify(expenses));
+//     return {date, amount, description, category};
+// }
+
+// const createElement = ({date, amount, description, category}) =>{
+//     const li = document.createElement("li");
+//     const deleteBtn = document.createElement("button");
+//     const editBtn = document.createElement("button");
+
+//     li.innerText = `${date} -> ${amount} -> ${description} -> ${category}`;
+//     deleteBtn.className = "delete";
+//     editBtn.className = "edit";
+//     deleteBtn.appendChild(document.createTextNode("Delete Expense"));
+//     editBtn.appendChild(document.createTextNode("Edit Expense"));
+//     li.append(deleteBtn,editBtn);
+//     itemList.append(li);
+//     deleteItem(deleteBtn,date);
+//     editItem(editBtn,date, amount, description, category)
+// }
+// expenses.forEach(createElement);
+// expenseForm.onsubmit = (e) =>{
+//     e.preventDefault();
+
+//     const newExpense = addElement(
+//         dateInput.value,
+//         amountInput.value,
+//         descriptionInput.value,
+//         categoryInput.value
+//     )
+//     createElement(newExpense);
+//     dateInput.value = "";
+//     amountInput.value = "";
+//     descriptionInput.value= "";
+//     categoryInput.value = "";
+// }
+
+// function removeItem(e){
+//     if(e.target.classList.contains('delete')){
+//         if(confirm('Are You Sure?')){
+//             let del = e.target.parentElement;
+//             itemList.removeChild(del);
+//         }
+//     }
+//     if(e.target.classList.contains('edit')){
+//         if(confirm('Are You Sure?')){
+//             let ed = e.target.parentElement;
+//             itemList.removeChild(ed);
+//         }
+//     }
+// }
+
+// const deleteItem = (deleteBtn,date) =>{
+//     deleteBtn.onclick = () =>{
+//         localStorage.removeItem(date);
+//     }
+// }
+
+// const editItem = (editBtn,date, amount, description, category) =>{
+//     editBtn.onclick = () =>{
+//         let itemDate = document.getElementById("date");
+//         itemDate.value = date;
+//         let itemAmount = document.getElementById("amount");
+//         itemAmount.value = amount;
+//         let itemDescription = document.getElementById("description");
+//         itemDescription.value = description;
+//         let itemCategory = document.getElementById("category");
+//         itemCategory.value = category;
+//         localStorage.removeItem(date);
+//     }
+// }
 function onsignup(event){
     event.preventDefault();
     let myObj = {
@@ -13,54 +98,24 @@ function onsignup(event){
         category: event.target.category.value,
     }
     myObj_Ser = JSON.stringify(myObj);
-    localStorage.setItem(event.target.date.value, myObj_Ser);
+    localStorage.setItem(myObj.date, myObj_Ser);
+
     
+    let li = addElement("li", "list-group-item", myObj.date + "->" + myObj.amount + "->" + myObj.description + "->" + myObj.category);
 
-    //Add Item
-    // Create new li element
-    let li = document.createElement('li');
-    // Add class
-    li.className = 'list-group-item';
-    // Add text node with input value
-    let print = myObj.date + "->" + myObj.amount + "->" + myObj.description + "->" + myObj.category;
-    li.appendChild(document.createTextNode(print));
+    let deleteBtn = addElement("button", "btn btn-danger btn-sm float-right delete", "Delete Expense")
 
-    // Create del button element
-    let deleteBtn = document.createElement('button');
-  
-    // Add classes to del button
-    deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
-  
-    // Append text node
-    deleteBtn.appendChild(document.createTextNode('Delete Expense'));
-    deleteBtn.onclick = () =>{
-      localStorage.removeItem(myObj.date);
-    }
+    let editBtn = addElement("button", "edit", "Edit Expense")
+    li.append(editBtn,deleteBtn);
 
-    //Create Edit Button
-    let editBtn = document.createElement('button');
-    editBtn.className = 'edit';
-    editBtn.appendChild(document.createTextNode('Edit Expense'));
-    editBtn.onclick = () =>{
-      let itemDate = document.getElementById("date");
-      itemDate.value = myObj.date;
-      let itemAmount = document.getElementById("amount");
-      itemAmount.value = myObj.amount;
-      let itemDescription = document.getElementById("description");
-      itemDescription.value = myObj.description;
-      let itemCategory = document.getElementById("category");
-      itemCategory.value = myObj.category;
-      localStorage.removeItem(myObj.date);
-    }
-
-    li.appendChild(editBtn);
-    
-    // Append button to li
-    li.appendChild(deleteBtn);
-  
     // Append li to list
     itemList.appendChild(li);
-    //make list input bar empty after adding expense
+
+    //edit or delete item from localstorage
+    editItem(editBtn,myObj.date);
+    deleteItem(deleteBtn,myObj.date);
+
+    //make list input bars empty after adding expense
     document.getElementById("date").value = "";
     document.getElementById("amount").value = "";
     document.getElementById("description").value = "";
@@ -82,3 +137,34 @@ function onsignup(event){
       }
     }
   }
+
+  //Add new element to the page
+  const addElement = (elementName, clName, print) =>{
+    let element = document.createElement(elementName);
+    // Add class
+    element.className = clName;
+    // Add text node with input value
+    element.appendChild(document.createTextNode(print));
+    return element;
+  }
+//delete item from the localstorage
+const deleteItem = (deleteBtn,date) =>{
+    deleteBtn.onclick = () =>{
+        localStorage.removeItem(date);
+    }
+}
+
+//edit item from the localstorage
+const editItem = (editBtn,date, amount, description, category) =>{
+    editBtn.onclick = () =>{
+        let itemDate = document.getElementById("date");
+        itemDate.value = date;
+        let itemAmount = document.getElementById("amount");
+        itemAmount.value = amount;
+        let itemDescription = document.getElementById("description");
+        itemDescription.value = description;
+        let itemCategory = document.getElementById("category");
+        itemCategory.value = category;
+        localStorage.removeItem(date);
+    }
+}
