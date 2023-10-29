@@ -10,7 +10,6 @@ const descriptionInput = expenseForm["description"];
 const categoryInput = expenseForm["category"];
 
 const addElement = (date, amount, description, category) =>{
-  console.log(typeof date)
     const myObj = {
         date:date,
         amount:amount,
